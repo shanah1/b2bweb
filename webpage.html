@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insurance Coverage for B2B Partners</title>
+  <style>
+    /* CSS code */
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 100%; /* Adjust for responsiveness */
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    #programs {
+      margin-top: 20px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+    }
+
+    .premium {
+      margin-left: 20px;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto;
+    }
+
+    /* Add spacing between premium information */
+    #wellness-premium,
+    #health-premium,
+    #travel-premium,
+    #total-premium {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Insurance Coverage for B2B Partners</h1>
+    <label for="university-select">Select a University:</label>
+    <select id="university-select">
+        <option value="Select University">Select a University</option>
+      <option value="Syracuse University, New York">Syracuse University, New York</option>
+      <option value="SUNY, Buffalo">SUNY, Buffalo</option>
+      <option value="University of Illinois, Chicago">University of Illinois, Chicago</option>
+      <option value="Texas A&M University, Kingsville">Texas A&M University, Kingsville</option>
+    </select>
+
+    <div id="coverage-details">
+      <!-- Coverage details will be displayed here -->
+    </div>
+
+    <h2>Programs</h2>
+    <div id="programs">
+        <label><input type="checkbox" name="wellness">Wellness Program</label>
+        <div class="premium" id="wellness-premium"></div>
+    
+        <label><input type="checkbox" name="health">Health Insurance</label>
+        <div class="premium" id="health-premium"></div>
+    
+        <label><input type="checkbox" name="travel">Travel Insurance</label>
+        <div class="premium" id="travel-premium"></div>
+    
+        <div id="total-premium" class="premium"></div>
+    </div>
+    
+
+    <button id="print-button">Print Premium</button> <!-- Changed the button id to match the JavaScript -->
+  </div>
+
+  <script>
+    // JavaScript code
+    document.addEventListener('DOMContentLoaded', function() {
+      var universitySelect = document.getElementById('university-select');
+      var coverageDetails = document.getElementById('coverage-details');
+      var wellnessPremium = document.getElementById('wellness-premium');
+      var healthPremium = document.getElementById('health-premium');
+      var travelPremium = document.getElementById('travel-premium');
+      var totalPremium = document.getElementById('total-premium');
+      var printButton = document.getElementById('print-button');
+    
+      var premiums = {
+        wellness: 50,
+        health: 100,
+        travel: 75
+      };
+    
+      var coverageMap = {
+        'Syracuse University, New York': {
+          adequatePolicyMaximum: 'Policy Maximum: $50,000',
+          deductible: 'Deductible: Relatively Low',
+          mentalHealthCoverage: 'Mental Health Coverage: In-patient and Out-patient care provided',
+          maternityCoverage: 'Maternity Coverage: At least 80% coverage for pre-natal, delivery, and post-natal care'
+        },
+        'SUNY, Buffalo': {
+          adequatePolicyMaximum: 'Policy Maximum: $50,000',
+          deductible: 'Deductible: Relatively Low',
+          mentalHealthCoverage: 'Mental Health Coverage: In-patient and Out-patient care provided',
+          maternityCoverage: 'Maternity Coverage: At least 80% coverage for pre-natal, delivery, and post-natal care'
+        },
+        'University of Illinois, Chicago': {
+          adequatePolicyMaximum: 'Policy Maximum: $50,000',
+          deductible: 'Deductible: Relatively Low',
+          mentalHealthCoverage: 'Mental Health Coverage: In-patient and Out-patient care provided',
+          maternityCoverage: 'Maternity Coverage: At least 80% coverage for pre-natal, delivery, and post-natal care'
+        },
+        'Texas A&M University, Kingsville': {
+          adequatePolicyMaximum: 'Policy Maximum: $50,000',
+          deductible: 'Deductible: Relatively Low',
+          mentalHealthCoverage: 'Mental Health Coverage: In-patient and Out-patient care provided',
+          maternityCoverage: 'Maternity Coverage: At least 80% coverage for pre-natal, delivery, and post-natal care'
+        }
+      };
+    
+      universitySelect.addEventListener('change', function() {
+        var selectedUniversity = universitySelect.value;
+        var coverage = coverageMap[selectedUniversity];
+        coverageDetails.innerHTML = `
+          <h2>Approved Health Coverage Requirements for ${selectedUniversity}</h2>
+          <ul>
+            <li>${coverage.adequatePolicyMaximum}</li>
+            <li>${coverage.deductible}</li>
+            <li>${coverage.mentalHealthCoverage}</li>
+            <li>${coverage.maternityCoverage}</li>
+          </ul>
+        `;
+      });
+    
+      function updatePremium() {
+        var total = 0;
+        for (var program in premiums) {
+          var checkbox = document.querySelector('input[name="' + program + '"]');
+          var premiumDisplay = document.getElementById(program + '-premium');
+          if (checkbox.checked) {
+            premiumDisplay.textContent = '$' + premiums[program];
+            total += premiums[program];
+          } else {
+            premiumDisplay.textContent = '';
+          }
+        }
+        totalPremium.textContent = 'Total Premium: $' + total;
+      }
+    
+      var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', updatePremium);
+      });
+    
+      printButton.addEventListener('click', printPremium);
+    
+      function printPremium() {
+        window.print();
+      }
+    });
+  </script>
+</body>
+</html>
